@@ -81,7 +81,7 @@ class Game:
                 "coutSoustraitance": self.coutSoustraitance,
                 "coutAccesAnticiper": 1000 * (self.weekSinceSortieAnticiper + 1),
                 "bilan": self.budget - coutProgrammer - coutTester - self.coutSoustraitance - 1000 * (
-                            self.weekSinceSortieAnticiper + 1)}
+                        self.weekSinceSortieAnticiper + 1)}
 
 
 class Programmer:

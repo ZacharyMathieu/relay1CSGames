@@ -1,9 +1,11 @@
+import sys
+
 import PySimpleGUI as psg
 from PyQt6.QtWidgets import QApplication, QLabel, QVBoxLayout, QWidget, QMainWindow, QHBoxLayout, QTabWidget, \
     QPushButton
-import sys
-
 from game import Game
+
+
 # TODO reste a finir le ui de la game tout les fonctionnalité sont la
 
 
@@ -92,7 +94,14 @@ class Window(QMainWindow):
         self.game.sortieAnticiper()
 
     def button5(self):
-        self.game.nextWeek()
+        try:
+            self.game.nextWeek()
+            self.update()
+        except Exception as ex:
+            if str(ex) == "You win":
+                self.update(msg="YOU WIN")
+            elif str(ex) == "You lose":
+                self.update(msg="YOU LOSE")
 
     def button6(self):
         # TODO créer principe de scoreboard
@@ -107,9 +116,19 @@ class Window(QMainWindow):
     # -----------------
     # pages
 
-    def ui1(self):
+    def update(self, msg=None):
+        self.tab1 = self.ui1(msg=msg)
+        self.initUI()
+
+    def ui1(self, msg=None):
+        message = msg
+        if not message:
+            message = f"Budget: {self.game.budget}" \
+                      f"\nWeek #: {self.game.week}"
+        print(message)
         main_layout = QVBoxLayout()
-        main_layout.addWidget(QLabel(str(self.game.budget)))
+        main_layout.addWidget(QLabel(message))
+        # main_layout.addStretch(QWidget())
         main_layout.addStretch(5)
         main = QWidget()
         main.setLayout(main_layout)
